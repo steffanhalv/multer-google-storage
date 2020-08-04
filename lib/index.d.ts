@@ -1,24 +1,26 @@
-/// <reference types="express" />
-/// <reference types="multer" />
-import * as multer from 'multer';
-import { ConfigurationObject } from '@google-cloud/storage';
+import multer = require('multer');
+import { StorageOptions } from '@google-cloud/storage';
 import { Request } from 'express';
 export default class MulterGoogleCloudStorage implements multer.StorageEngine {
-    private gcobj;
     private gcsBucket;
+    private gcsStorage;
     private options;
+    private blobFile;
     getFilename(req: any, file: any, cb: any): void;
     getDestination(req: any, file: any, cb: any): void;
-    getContentType: ContentTypeFunction;
-    constructor(opts?: ConfigurationObject & {
-        filename?: any;
+    getContentType(req: any, file: any): any;
+    private setBlobFile;
+    constructor(opts?: any & {
         bucket?: string;
+        destination?: any;
+        filename?: any;
+        hideFilename?: boolean;
         contentType?: ContentTypeFunction;
     });
     _handleFile: (req: any, file: any, cb: any) => void;
     _removeFile: (req: any, file: any, cb: any) => void;
 }
-export declare function storageEngine(opts?: ConfigurationObject & {
+export declare function storageEngine(opts?: StorageOptions & {
     filename?: any;
     bucket?: string;
 }): MulterGoogleCloudStorage;
