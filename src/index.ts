@@ -12,8 +12,8 @@ export default class MulterGoogleCloudStorage implements multer.StorageEngine {
 	private blobFile: {destination?: string, filename: string} = { destination: '', filename: '' };
 		
 	getFilename( req, file, cb ) {
-		if(typeof file.originalname === 'string')
-			cb( null, file.originalname );
+		if (typeof file.originalname === 'string')
+			cb(null,`${file.originalname}`);
 		else
 			cb( null, `${uuid()}` );
 	}
@@ -52,11 +52,14 @@ export default class MulterGoogleCloudStorage implements multer.StorageEngine {
 				return false;
 			}
 
+			this.blobFile.filename = filename;
+			/*
 			this.blobFile.filename = urlencode(filename
 				.replace(/^\.+/g, '')
 				.replace(/^\/+/g, '')
 				.replace(/\r|\n/g, '_')
 			);
+			*/
 		});
 
 		return true;
